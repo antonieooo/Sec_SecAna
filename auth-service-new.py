@@ -8,16 +8,31 @@ def get_db_connection():
     
     return conn
 
+def validate_username(username):
+    try:
+        if username is None:
+            return False
+
+        if not re.fullmatch(r"[A-Za-z0-9_]{3,30}", username):
+            return False
+
+        return True
+    except Exception:
+        return False
+
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form.get('username')
     password = request.form.get('password')
-    
+
+    if not validate_username(username):
+        return "Invalid username", 400
+
     conn = get_db_connection()
     cursor = conn.cursor()
     
     
-    query = f"SELECT * FROM users WHERE username = '{username}' AND password = '{password}'"
+    query = "SELECT * FROM users WHERE username = ? AND password = ?"
     
     try:
         
