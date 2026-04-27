@@ -25,7 +25,7 @@ jobs:
           
           python -c "import sqlite3; conn = sqlite3.connect('users.db'); conn.execute('CREATE TABLE IF NOT EXISTS users (username TEXT, password TEXT, ssn TEXT)'); conn.execute('INSERT INTO users VALUES (\"admin\", \"password123\", \"123-456-7890\")'); conn.commit(); conn.close()"
           
-          nohup python auth-service.py > flask.log 2>&1 & 
+          nohup python auth-service-new.py > flask.log 2>&1 & 
 
           sleep 12
           ps aux | grep python
